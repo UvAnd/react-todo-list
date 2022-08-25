@@ -20,13 +20,6 @@ export const App: React.FC = () => {
     state.removeTask,
   ]);
 
-
-  useEffect(()=>{
-    createTask('titlle');
-  }, [])
-
-  console.log(11,tasks);
-
   return (
     <article className={styles.article}>
       <h1 className={styles.articleTitle}>TODO App</h1>

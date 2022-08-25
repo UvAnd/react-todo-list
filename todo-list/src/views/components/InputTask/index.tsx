@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import styles from './index.module.scss';
 
@@ -19,7 +19,16 @@ export const InputTask: React.FC<InputTaskProps> = ({
 }) => {
   console.log(332323);
 
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [value, setValue] = useState(title);
+  const editTitleInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isEditMode) {
+      editTitleInputRef?.current?.focus();
+    }
+  }, [isEditMode]);
 
   return (
     <div className={styles.inputTask}>
@@ -31,18 +40,51 @@ export const InputTask: React.FC<InputTaskProps> = ({
           onChange={(evn) => {
             setChecked(evn.target.checked);
 
-            evn.target.checked && onDone(id);
+            evn.target.checked && setTimeout(() => {onDone(id)}, 200);
           }}
+          disabled={isEditMode}
         />
-        <h3 className={styles.inputTaskTitle}>{title}</h3>
+        {isEditMode ? (
+          <input
+            className={styles.inputTaskEditTitle}
+            value={value}
+            onChange={(evt) => {
+              setValue(evt.target.value);
+            }}
+            onKeyDown={(evt) => {
+              if (evt.key  === 'Enter') {
+                onEdited(id, value);
+                setIsEditMode(false);
+              }
+            }}
+
+          ref={editTitleInputRef}
+          />
+        ) : (
+          <h3 className={styles.inputTaskTitle}>{title}</h3>
+        )}
       </label>
 
-      <button
-        className={styles.inputTaskEdit}
-        onClick={() => {confirm('Are you sure?') && onRemoved(id)}}
-        aria-label="Edit"
-      >
-      </button>
+
+      {isEditMode ? (
+        <button
+          className={styles.inputTaskSave}
+          onClick={() => {
+            onEdited(id, value);
+            setIsEditMode(false);
+          }}
+          aria-label="Save"
+        >
+        </button>
+      ) : (
+        <button
+          className={styles.inputTaskEdit}
+          onClick={() => {setIsEditMode(true )}}
+          aria-label="Edit"
+        >
+        </button>
+      )}
+
       <button
         className={styles.inputTaskRemove}
         onClick={() => {confirm('Are you sure?') && onRemoved(id)}}
