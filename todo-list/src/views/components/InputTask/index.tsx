@@ -32,6 +32,7 @@ export const InputTask: React.FC<InputTaskProps> = ({
 
   return (
     <div className={styles.inputTask}>
+      <img className={styles.inputTaskDrag} src="/drag.png"></img>
       <label className={styles.inputTaskLabel}>
         <input
           className={styles.inputTaskCheckbox}

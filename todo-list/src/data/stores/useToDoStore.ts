@@ -1,3 +1,4 @@
+import { DropResult } from 'react-beautiful-dnd';
 import create, { StateCreator, State } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
@@ -14,6 +15,7 @@ interface ToDoStore {
   createTask: (title: string) => void;
   updateTask: (id: string, title: string) => void;
   removeTask: (id: string) => void;
+  onDragEnd: (result: DropResult) => void;
 }
 
 function isToDoStore(object: any): object is ToDoStore {
@@ -70,5 +72,18 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate(devtools((set, 
     set({
       tasks: tasks.filter((task) => task.id !== id)
     });
+  },
+
+  onDragEnd: (result: DropResult) => {
+    const { tasks } = get();
+    const newItems = Array.from(tasks);
+    const [removed] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, removed);
+    set({
+      tasks: newItems
+    });
+
+    console.log('tasks', tasks);
+    console.log('newItems', newItems);
   },
 }))));

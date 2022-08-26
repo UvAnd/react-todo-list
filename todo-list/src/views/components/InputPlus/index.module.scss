@@ -1,16 +1,31 @@
 .inputPlus {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 60px;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr min-content;
   margin-bottom: 15px;
+  background: #fefefe;
+  border-radius: 5px;
+
+  .inputs {
+    display: grid;
+    width: 100%;
+  }
 
   &Value {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  &ValueDesc {
+    border-bottom-left-radius: 5px;
+  }
+  &Value,
+  &ValueDesc {
+      background: #DBE2EF;
       border: 1px solid #B1B1B1;
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
       padding: 9px 10px;
       font: 1rem/1.4 'Roboto', sans-serif;
-      background: #DBE2EF;
 
       &::placeholder {
           color: #7B7B7B;
@@ -25,6 +40,7 @@
       cursor: pointer;
       background: #3F72AF url('./images/plus.svg') no-repeat center center;
       transition: opacity 0.3s;
+      width: 40px;
 
       &:hover {
           opacity: 0.7;
