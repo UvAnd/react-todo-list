@@ -35,6 +35,13 @@
   }
 }
 
+.articleSectionDrag {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    gap: 8px;
+}
+
 .draggable {
     margin-bottom: 15px;
     display: grid;
@@ -42,6 +49,28 @@
 
 .isDragging {
     & > div {
-        background: rgb(219, 216, 216);;
+        background: rgb(219, 216, 216);
+    }
+}
+
+.dragDropContext {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 24px;
+
+    & > div {
+        width: 100%;
+    }
+}
+
+.dragDropContextItem {
+    padding: 24px 8px 8px;
+    background:rgb(243, 243, 243);
+    border-radius: 8px;
+    min-height: 206px;
+
+    &.dragDropContextItemDragging {
+        background: lightblue;
     }
 }

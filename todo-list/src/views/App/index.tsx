@@ -18,13 +18,13 @@ import styles from './index.module.scss';
 export const App: React.FC = () => {
 
   const [
-    tasks,
+    columns,
     createTask,
     updateTask,
     removeTask,
     onDragEnd,
   ] = useToDoStore(state => [
-    state.tasks,
+    state.columns,
     state.createTask,
     state.updateTask,
     state.removeTask,
@@ -41,43 +41,59 @@ export const App: React.FC = () => {
           }
         }}></InputPlus>
       </section>
-      <section className={styles.articleSection}>
+      <section className={styles.articleSectionDrag}>
         <>
-          {!tasks.length && (<p className={styles.articleText}>There is no one task</p>)}
+          {!columns && (<p className={styles.articleText}>There is no one task</p>)}
 
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
-              {(provided:DroppableProvided, snapshot:DroppableStateSnapshot) => (
-                <div {...provided.droppableProps} ref={provided.innerRef} snapshot={snapshot}>
-                  {tasks.map((item, index) => (
-                    <Draggable  key={item.id} draggableId={item.id} index={index}>
-                      {(providedDraggable:DraggableProvided, snapshotDraggable:DraggableStateSnapshot) => (
-                          <div
-                            ref={providedDraggable.innerRef}
-                            snapshot={snapshotDraggable}
-                            {...providedDraggable.draggableProps}
-                            {...providedDraggable.dragHandleProps}
-                            // className={styles.draggable}
-                            className={cx(styles.draggable, {
-                              [styles.isDragging]: snapshotDraggable.isDragging,
-                            })}
-                          >
-                          <InputTask
-                            key={item.id}
-                            id={item.id}
-                            title={item.title}
-                            onDone={removeTask}
-                            onEdited={updateTask}
-                            onRemoved={removeTask}
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
+          {Object.entries(columns).map(([columnId, column], index) => {
+            return (
+              <div className={styles.dragDropContext} key={columnId}>
+                <h2>{column.name}</h2>
+                <div>
+
+                <Droppable droppableId={columnId} key={columnId}>
+                  {(provided:DroppableProvided, snapshot:DroppableStateSnapshot) => (
+                    <div
+                      {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        snapshot={snapshot}
+                        className={cx(styles.dragDropContextItem, {
+                          [styles.dragDropContextItemDragging]: snapshot.isDraggingOver,
+                        })}
+                      >
+                      {column.items.map((item, index) => (
+                        <Draggable  key={item.id} draggableId={item.id} index={index}>
+                          {(providedDraggable:DraggableProvided, snapshotDraggable:DraggableStateSnapshot) => (
+                              <div
+                                ref={providedDraggable.innerRef}
+                                snapshot={snapshotDraggable}
+                                {...providedDraggable.draggableProps}
+                                {...providedDraggable.dragHandleProps}
+                                className={cx(styles.draggable, {
+                                  [styles.isDragging]: snapshotDraggable.isDragging,
+                                })}
+                              >
+                              <InputTask
+                                key={item.id}
+                                id={item.id}
+                                title={item.title}
+                                onDone={removeTask}
+                                onEdited={updateTask}
+                                onRemoved={removeTask}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+
                 </div>
-              )}
-            </Droppable>
+              </div>
+            )})}
           </DragDropContext>
         </>
       </section>

@@ -5,9 +5,9 @@ import styles from './index.module.scss';
 interface InputTaskProps {
   id: string;
   title: string;
-  onDone: (id: string) => void;
-  onEdited: (id: string, title: string) => void;
-  onRemoved: (id: string) => void;
+  onDone: (id: string, column: string) => void;
+  onEdited: (id: string, title: string, column: string) => void;
+  onRemoved: (id: string, column: string) => void;
 }
 
 export const InputTask: React.FC<InputTaskProps> = ({
@@ -17,7 +17,6 @@ export const InputTask: React.FC<InputTaskProps> = ({
   onEdited,
   onRemoved,
 }) => {
-  console.log(332323);
 
   const [checked, setChecked] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -30,6 +29,13 @@ export const InputTask: React.FC<InputTaskProps> = ({
     }
   }, [isEditMode]);
 
+  let column = "Requested";
+
+  const setColumn = (e: any) => {
+    const targetElement = e.target.closest('div[data-rbd-droppable-id]');
+    column = targetElement.getAttribute('data-rbd-droppable-id');
+  }
+
   return (
     <div className={styles.inputTask}>
       <img className={styles.inputTaskDrag} src="/drag.png"></img>
@@ -40,8 +46,8 @@ export const InputTask: React.FC<InputTaskProps> = ({
           checked={checked}
           onChange={(evn) => {
             setChecked(evn.target.checked);
-
-            evn.target.checked && setTimeout(() => {onDone(id)}, 200);
+            setColumn(evn);
+            evn.target.checked && setTimeout(() => {onDone(id, column)}, 200);
           }}
           disabled={isEditMode}
         />
@@ -54,7 +60,8 @@ export const InputTask: React.FC<InputTaskProps> = ({
             }}
             onKeyDown={(evt) => {
               if (evt.key  === 'Enter') {
-                onEdited(id, value);
+                setColumn(evt);
+                onEdited(id, value, column);
                 setIsEditMode(false);
               }
             }}
@@ -70,8 +77,9 @@ export const InputTask: React.FC<InputTaskProps> = ({
       {isEditMode ? (
         <button
           className={styles.inputTaskSave}
-          onClick={() => {
-            onEdited(id, value);
+          onClick={(evn) => {
+            setColumn(evn);
+            onEdited(id, value, column);
             setIsEditMode(false);
           }}
           aria-label="Save"
@@ -80,7 +88,7 @@ export const InputTask: React.FC<InputTaskProps> = ({
       ) : (
         <button
           className={styles.inputTaskEdit}
-          onClick={() => {setIsEditMode(true )}}
+          onClick={() => {setIsEditMode(true)}}
           aria-label="Edit"
         >
         </button>
@@ -88,7 +96,7 @@ export const InputTask: React.FC<InputTaskProps> = ({
 
       <button
         className={styles.inputTaskRemove}
-        onClick={() => {confirm('Are you sure?') && onRemoved(id)}}
+        onClick={(evn) => {confirm('Are you sure?') && setColumn(evn); onRemoved(id, column);}}
         aria-label="Remove"
       >
       </button>

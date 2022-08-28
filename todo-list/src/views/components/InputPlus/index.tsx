@@ -19,7 +19,7 @@ export const InputPlus: React.FC<InputPlusProps> = ({onAdd}) => {
         <input
           className={styles.inputPlusValue}
           type="text"
-          // placeholder="Add title to TODO"
+          placeholder="Create new taskto Requested"
           value={inputValue}
           onChange={(evn) => seInputValue(evn.target.value)}
           onKeyDown={(evn) => {
