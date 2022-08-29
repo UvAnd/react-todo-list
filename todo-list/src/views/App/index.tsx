@@ -43,8 +43,6 @@ export const App: React.FC = () => {
       </section>
       <section className={styles.articleSectionDrag}>
         <>
-          {!columns && (<p className={styles.articleText}>There is no one task</p>)}
-
           <DragDropContext onDragEnd={onDragEnd}>
           {Object.entries(columns).map(([columnId, column], index) => {
             return (

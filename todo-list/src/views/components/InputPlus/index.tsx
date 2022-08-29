@@ -28,17 +28,6 @@ export const InputPlus: React.FC<InputPlusProps> = ({onAdd}) => {
             }
           }}
         />
-        {/* <textarea
-          className={styles.inputPlusValueDesc}
-          placeholder="Add description to TODO"
-          value={inputValue}
-          onChange={(evn) => seInputValue(evn.target.value)}
-          onKeyDown={(evn) => {
-            if (evn.key === 'Enter') {
-              addTask()
-            }
-          }}
-        /> */}
       </div>
       <button
         className={styles.inputPlusButton}
