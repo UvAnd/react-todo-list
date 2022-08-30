@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { useToDoStore } from "../../data/stores/useToDoStore"
+import { Task, useToDoStore } from "../../data/stores/useToDoStore"
 import { InputPlus } from "../components/InputPlus";
 import { InputTask } from "../components/InputTask";
 import cx from "classnames";
@@ -23,16 +23,19 @@ export const App: React.FC = () => {
     updateTask,
     removeTask,
     onDragEnd,
+    createTemplate,
   ] = useToDoStore(state => [
     state.columns,
     state.createTask,
     state.updateTask,
     state.removeTask,
     state.onDragEnd,
+    state.createTemplate,
   ]);
 
   return (
-    <article className={styles.article}>
+    <div className={styles.article}>
+      <>
       <h1 className={styles.articleTitle}>TODO App</h1>
       <section className={styles.articleSection}>
         <InputPlus onAdd={(title)=> {
@@ -41,6 +44,12 @@ export const App: React.FC = () => {
           }
         }}></InputPlus>
       </section>
+      {console.log('1111', Array.isArray(columns))}
+      {Array.isArray(columns) ? (
+        <section className={styles.articleEmpty}>
+          <button onClick={createTemplate}>Create Template</button>
+        </section>
+      ) : (
       <section className={styles.articleSectionDrag}>
         <>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -55,17 +64,15 @@ export const App: React.FC = () => {
                     <div
                       {...provided.droppableProps}
                         ref={provided.innerRef}
-                        snapshot={snapshot}
                         className={cx(styles.dragDropContextItem, {
                           [styles.dragDropContextItemDragging]: snapshot.isDraggingOver,
                         })}
                       >
-                      {column.items.map((item, index) => (
+                      {column.items.map((item: Task, index: number) => (
                         <Draggable  key={item.id} draggableId={item.id} index={index}>
                           {(providedDraggable:DraggableProvided, snapshotDraggable:DraggableStateSnapshot) => (
                               <div
                                 ref={providedDraggable.innerRef}
-                                snapshot={snapshotDraggable}
                                 {...providedDraggable.draggableProps}
                                 {...providedDraggable.dragHandleProps}
                                 className={cx(styles.draggable, {
@@ -95,6 +102,8 @@ export const App: React.FC = () => {
           </DragDropContext>
         </>
       </section>
-    </article>
+      )}
+      </>
+    </div>
   );
 }
