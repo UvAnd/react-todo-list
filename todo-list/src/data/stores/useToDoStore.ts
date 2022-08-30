@@ -2,24 +2,25 @@ import { DropResult } from 'react-beautiful-dnd';
 import create, { StateCreator, State } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import { generateId } from '../helpers';
+import { generateId, todoTemplate } from '../helpers';
 
-interface Task {
+export interface Task {
   id: string;
   title: string;
   createdAt: number;
 }
-interface Columns {
+export interface Columns {
   name: string;
   tasks: Task[];
 }
 
 interface ToDoStore {
-  columns: any;
+  columns: Columns;
   createTask: (title: string) => void;
   updateTask: (id: string, title: string, column: string) => void;
   removeTask: (id: string, column: string) => void;
   onDragEnd: (result: DropResult) => void;
+  createTemplate: () => void;
 }
 
 function isToDoStore(object: any): object is ToDoStore {
@@ -149,5 +150,11 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate(devtools((set, 
         columns: newColumns
       });
     }
+  },
+
+  createTemplate: () => {
+    console.log('111', window.localStorage);
+    window.localStorage.setItem('columns', JSON.stringify(todoTemplate));
+    document.location.reload();
   },
 }))));
