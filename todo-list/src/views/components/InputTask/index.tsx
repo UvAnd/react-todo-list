@@ -6,7 +6,7 @@ interface InputTaskProps {
   id: string;
   title: string;
   onDone: (id: string, column: string) => void;
-  onEdited: (id: string, title: string, column: string) => void;
+  onEdited: (id: string, title: string, column: any) => void;
   onRemoved: (id: string, column: string) => void;
 }
 

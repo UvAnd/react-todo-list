@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DropResult } from 'react-beautiful-dnd';
 import create, { StateCreator, State } from 'zustand'
 import { devtools } from 'zustand/middleware'
@@ -34,9 +35,9 @@ StateCreator<T> => (set, get, api) => config((nextState, ...args) => {
   }
   set(nextState, ...args);
 }, get, api);
-const getCurrentColumnsState = () => {
+const getCurrentColumnsState = (): Columns | never[]  => {
   try {
-    const currentState = (JSON.parse(window.localStorage.getItem('columns') || '[]')) as Columns[];
+    const currentState = (JSON.parse(window.localStorage.getItem('columns') || '[]')) as Columns;
     return currentState;
   }
   catch(err) {
