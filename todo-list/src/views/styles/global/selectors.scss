@@ -1,0 +1,78 @@
+//Selector modul
+@use "sass:selector";
+
+@mixin unify-parent($child) {
+  @at-root #{selector.unify(&, $child)} {
+    @content;
+  }
+}
+
+.wrapper .field {
+  @include unify-parent("input") {
+    /* ... */
+  }
+  @include unify-parent("select") {
+    /* ... */
+  }
+}
+
+
+.alert {
+  // The parent selector can be used to add pseudo-classes to the outer
+  // selector.
+  &:hover {
+    font-weight: bold;
+  }
+
+  // It can also be used to style the outer selector in a certain context, such
+  // as a body set to use a right-to-left language.
+  [dir=rtl] & {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
+  // You can even use it as an argument to pseudo-class selectors.
+  :not(&) {
+    opacity: 0.8;
+  }
+}
+
+// селектор&
+// .bar {
+//   .foo& {
+//       color: baz;
+//   }
+// }
+.bar {
+  .foo#{&} {
+      color: baz;
+  }
+}
+.bar {
+  @at-root .foo#{&} {
+      color: baz;
+  }
+}
+
+%myclass {
+  color: blue;
+
+  @media (min-width: 600px) {
+    background: red;
+  }
+  @media (min-width: 800px) {
+    font-size: 28px;
+  }
+}
+
+.class1 {
+  // Work
+  @extend %myclass;
+  @media (min-width: 600px) {
+    // doesnt work
+    // @extend %myclass;
+
+    // We can create mixin like extend and just use it into media.
+  }
+}
+

@@ -36,7 +36,12 @@ export const App: React.FC = () => {
   return (
     <div className={styles.article}>
       <>
-      <h1 className={styles.articleTitle}>TODO App</h1>
+      <section className="global-start-section">
+        <div className="global-start-item">
+          <h1 className="global-start-title">Global Element</h1>
+        </div>
+      </section>
+      <h2 className={styles.articleTitle}>TODO App</h2>
       <section className={styles.articleSection}>
         <InputPlus onAdd={(title)=> {
           if (title) {

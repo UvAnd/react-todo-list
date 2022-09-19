@@ -1,0 +1,104 @@
+@use "sass:math" as math;
+@use "sass:meta";
+@use '../utils' as u;
+
+// This assignment will fail.
+// math.$pi: 0;
+
+// INFO:
+// Sass variables are imperative, which means if you use a variable and then change its value, the earlier use will stay the same.
+// CSS variables are declarative, which means if you change the value, it’ll affect both earlier uses and later uses.
+
+$base-color: #c6538c;
+$border-dark: rgba($base-color, 0.88);
+
+.alert {
+  border: 1px solid $border-dark;
+}
+
+// INFO:
+// $font-size and $font_size both refer to the same variable.
+
+$font_size: 20px;
+$font-size: 30px;
+
+.alertFont {
+  font-size: $font_size; // will be 30px
+}
+
+.alertFontLarge {
+  font-size: $font-size; // will be 30px
+}
+
+// Default Values
+
+$black: #000 !default;
+$black-no-default: #010101;
+$border-radius-default: 0.25rem !default;
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
+
+.codeDefaultValues {
+  border-radius: $border-radius-default;
+  box-shadow: $box-shadow;
+  color: $black-no-default;
+}
+
+// SCOPE
+$global-variable: 777px;
+
+.content {
+  $local-variable: 111px;
+  height: $global-variable;
+  width: $local-variable;
+}
+
+.sidebar {
+  width: $global-variable;
+
+  // This would fail, because $local-variable isn't in scope:
+  // height: $local-variable;
+}
+
+// Shadowing
+$variable: 'first global value';
+$variable-media: 'first media value';
+
+.content {
+  // If you need to set a global variable’s value from within a local scope (such as in a mixin), you can use the !global flag
+
+  // $variable: 'second global value' !global;
+  $variable: 'second global value';
+  content: $variable;
+}
+
+.sidebar {
+  content: $variable;
+}
+
+.sidebar-media-check {
+  content: $variable-media;
+  @include u.respond-to(large) {
+    $variable-media: 'second media value';
+    content: $variable-media;
+  }
+
+  $variable-media2: 'second33333 media value';
+  @media (min-width: 900px) {
+    $variable-media2: 'second22222 media value';
+    content: $variable-media2;
+  }
+}
+
+
+// Advanced Variable Functions
+@debug meta.global-variable-exists("var1"); // false
+
+$var1: "var1";
+@debug meta.global-variable-exists("var1"); // true
+
+h1 {
+  // $var2 is local.
+  $var2: "value111";
+  @debug meta.global-variable-exists("var2"); // false
+  @debug meta.variable-exists("var2"); // true
+}

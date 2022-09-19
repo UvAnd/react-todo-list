@@ -1,0 +1,41 @@
+@use '../utils' as u;
+@use '../../../libs/lib.scss' as *;
+
+.global-start {
+  &-section {
+    display: grid;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #333;
+    color: #fff;
+    border-radius: u.$border-radius;
+  }
+
+  &-item {
+    padding: 20px;
+
+    @include u.respond-to(large) {
+      padding: 40px;
+    }
+  }
+
+  &-title {
+    font-size: 4em;
+
+    &::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: red;
+      display: inline-block;
+      border-radius: $border-radius;
+      margin-left: 10px;
+    }
+  }
+}
+
+// var
+// var scss and css check
+
+

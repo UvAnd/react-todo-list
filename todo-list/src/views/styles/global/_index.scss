@@ -1,0 +1,11 @@
+@forward './boilerplate.scss';
+@forward './colors.scss';
+@forward './selectors.scss';
+@use './variables.scss';
+
+// wanna check @use with
+// @forward './useVariables.scss';
+
+.checkIndexGlobal {
+  color: variables.$black;
+}
