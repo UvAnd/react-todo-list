@@ -1,0 +1,11 @@
+@use 'buttons' with (
+  $color: red,
+  $style: 'flat',
+);
+
+@forward 'buttons';
+
+.button-useLoadInFile {
+  color: buttons.$color;
+  border-style: buttons.$style;
+}

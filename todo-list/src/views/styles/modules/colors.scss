@@ -1,0 +1,8 @@
+/* ранее lighten(red, 20%) */
+$light-red: color.adjust(red, $lightness: 20%);
+
+/* ранее adjust-hue(red, 180deg) */
+$complement: color.adjust(red, $hue: 180deg);
+
+/* теперь прибавляем к светлоте не просто число 20, а число 0.2, умноженное на текущюю светлоту */
+$light-red: color.scale(red, $lightness: 20%);

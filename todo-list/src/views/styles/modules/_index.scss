@@ -1,0 +1,61 @@
+// - Файл импортируется единожды, неважно сколько раз вы используете @use в проекте.
+
+// - Переменные, миксины и функции (которые в Sass называются «членами»), начинающиеся с подчеркивания (_) или дефиса (-),
+// считаются приватными и не импортируются.
+
+// - Члены из подключенного через @use файла (в наше случае buttons.scss) доступны только локально и не передаются последующему импорту.
+
+// - Аналогично, @extends будет применяться только вверх по цепочке; то есть расширение применяется только к стилям,
+// которые импортируются, а не к стилям, которые импортируют.
+
+// - Все импортированные члены по умолчанию имеют свое пространство имен.
+
+// ------------
+
+@use 'buttons'; /* создает пространство имен `buttons`*/
+@use 'forms'; /* создает пространство имен `forms`*/
+@use 'load';
+
+@use 'cards'; /* подключение всех проброшенных членов в пространство имён `cards` */
+
+// ------------
+
+
+
+
+// INFO - to iseLOAD
+// @use 'useLoad';
+
+// .button-useLoad {
+//   color: useLoad.$color;
+// }
+
+
+
+// ------------
+/* переменные: <namespace>.$variable */
+// $btn-color: buttons.$color;
+// $form-border: forms.$input-border;
+
+/* функции: <namespace>.function() */
+// $btn-background: buttons.background();
+// $form-border: forms.border();
+
+/* миксины: @include <namespace>.mixin() */
+// @include buttons.submit();
+// @include forms.input();
+
+
+// ------------
+/* config/_index.scss */
+// @forward 'tools';
+// @forward 'fonts';
+// @forward 'scale';
+// @forward 'colors';
+
+/* layout/_banner.scss */
+// @use '../config';
+
+// .page-title {
+//   @include config.font-family('header');
+// }

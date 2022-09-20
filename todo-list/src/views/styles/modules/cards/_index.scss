@@ -1,0 +1,26 @@
+// @forward 'input-card';
+// @forward 'textarea-card';
+// @forward 'buttons-card';
+
+// ------------
+
+// мы можем быть более избирательными c помощью условий show и hide и указания конкретных членов, которые мы хотим добавить или исключить.
+/* пробросить только миксин `border()` и переменную `$border-color` из модуля `input` */
+// @forward 'input-card' show border, $border-color;
+
+/* пробросить все члены модуля `buttons` за исключением  `$border-color-button-card` */
+// @forward 'buttons-card' hide $border-color-button-card;
+
+// ------------
+
+// AS
+
+/* @forward "<url>" as <prefix>-*; */
+/* предполагается, что у обоих модулей есть миксин`background()` */
+@forward 'input-card' as input-*;
+@forward 'buttonscard' as btn-*;
+
+/* style.scss */
+// @use 'cards';
+// @include cards.input-background();
+// @include cards.btn-background();
