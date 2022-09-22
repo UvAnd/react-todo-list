@@ -57,6 +57,66 @@
 
 
 // ===========
+// Extending Compound Selectors
+// These should both be extended, but they won't be.
+.message {
+  border: 1px solid black;
+}
+.info {
+  font-size: 1.5rem;
+}
+
+.heads-up {
+  @extend .message.info;
+}
+
+// СИНТАКСИС SCSS
+.message {
+  border: 1px solid black;
+}
+.info {
+  font-size: 1.5rem;
+}
+
+.heads-up {
+  @extend .message, .info;
+}
 
 
 // ===========
+
+СИНТАКСИС SCSS
+:root {
+  --flex-theme: {
+    border: 1px solid var(--theme-dark-blue);
+    font-family: var(--theme-font-family);
+    padding: var(--theme-wide-padding);
+    background-color: var(--theme-light-blue);
+  };
+}
+
+
+$accent-color: #fbbc04;
+
+:root {
+  // WRONG, will not work in recent Sass versions.
+  --accent-color-wrong: $accent-color;
+
+  // RIGHT, will work in all Sass versions.
+  --accent-color-right: #{$accent-color};
+}
+
+// CSS
+$accent-color: #fbbc04;
+// :root {
+//   --accent-color-wrong: $accent-color;
+//   --accent-color-right: #fbbc04;
+// }
+
+
+// meta.inspect() функцию , чтобы сохранить их кавычки.
+$font-family-monospace: Menlo, Consolas, "Courier New", monospace;
+
+:root {
+  --font-family-monospace: #{meta.inspect($font-family-monospace)};
+}
