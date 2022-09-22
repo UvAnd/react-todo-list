@@ -1,0 +1,52 @@
+
+$sizes: 40px, 50px, 80px;
+
+@each $size in $sizes {
+  .icon-#{$size} {
+    font-size: $size;
+    height: $size;
+    width: $size;
+  }
+}
+
+// -------------
+// С картами
+$icons: ("eye": "\f112", "start": "\f12e", "stop": "\f12f");
+
+@each $name, $glyph in $icons {
+  .icon-#{$name}:before {
+    display: inline-block;
+    font-family: "Icon Font";
+    content: $glyph;
+  }
+}
+
+// .icon-eye:before {
+//   display: inline-block;
+//   font-family: "Icon Font";
+//   content: "";
+// }
+
+// -------------
+// деструктурирование
+$icons:
+  "eye" "\f112" 12px,
+  "start" "\f12e" 16px,
+  "stop" "\f12f" 10px;
+
+@each $name, $glyph, $size in $icons {
+  .icon-#{$name}:before {
+    display: inline-block;
+    font-family: "Icon Font";
+    content: $glyph;
+    font-size: $size;
+  }
+}
+
+// .icon-eye:before {
+//   display: inline-block;
+//   font-family: "Icon Font";
+//   content: "";
+//   font-size: 12px;
+// }
+

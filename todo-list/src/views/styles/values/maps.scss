@@ -1,0 +1,38 @@
+// (1: 2, 3: 4)считается  (1 2, 3 4).
+$font-weights: ("regular": 400, "medium": 500, "bold": 700);
+
+@debug map.get($font-weights, "medium"); // 500
+@debug map.get($font-weights, "extra-bold"); // null
+
+// ==============
+$font-weights: ("regular": 400, "medium": 500, "bold": 700);
+
+@debug map.set($font-weights, "extra-bold", 900);
+// ("regular": 400, "medium": 500, "bold": 700, "extra-bold": 900)
+@debug map.set($font-weights, "bold", 900);
+// ("regular": 400, "medium": 500, "bold": 900)
+
+// ==============
+$light-weights: ("lightest": 100, "light": 300);
+$heavy-weights: ("medium": 500, "bold": 700);
+
+@debug map.merge($light-weights, $heavy-weights);
+// ("lightest": 100, "light": 300, "medium": 500, "bold": 700)
+
+// ==============
+$weights: ("light": 300, "medium": 500);
+
+@debug map.merge($weights, ("medium": 700));
+// ("light": 300, "medium": 700)
+
+// ==============
+// Обратите внимание,  map Sass являются неизменяемыми  map.set() и map.merge() не изменяют исходный список.
+$prefixes-by-browser: ("firefox": moz, "safari": webkit, "ie": ms);
+
+@mixin add-browser-prefix($browser, $prefix) {
+  $prefixes-by-browser: map.merge($prefixes-by-browser, ($browser: $prefix)) !global;
+}
+
+@include add-browser-prefix("opera", o);
+@debug $prefixes-by-browser;
+// ("firefox": moz, "safari": webkit, "ie": ms, "opera": o)

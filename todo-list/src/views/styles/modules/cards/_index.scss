@@ -18,7 +18,7 @@
 /* @forward "<url>" as <prefix>-*; */
 /* предполагается, что у обоих модулей есть миксин`background()` */
 @forward 'input-card' as input-*;
-@forward 'buttonscard' as btn-*;
+@forward 'buttons-card' as btn-*;
 
 /* style.scss */
 // @use 'cards';

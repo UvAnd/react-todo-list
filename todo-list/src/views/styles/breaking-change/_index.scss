@@ -1,0 +1,62 @@
+// Strict Unary Operators
+// Valid: 15px - $size
+// Valid: (15px)-$size
+// Invalid: 15px -$size
+
+// ===========
+// Random With Units
+// Future Sass, doesn't work yet!
+@debug math.random(100px); // 42px
+
+
+// ===========
+// Invalid Combinators
+// Ведущие комбинаторы, как в  + .error {color: red}.
+// Конечные комбинаторы, как в  .error + {color: red}.
+// Повторяющиеся комбинаторы, как в  div > > .error {color: red}.
+
+// Work 
+.sidebar > {
+  .error {
+    color: red;
+  }
+}
+
+// .sidebar > .error {
+//   color: red;
+// }
+
+// ===========
+// Slash as Division
+// @use "sass:math";
+
+// Future Sass, doesn't work yet!
+.item3 {
+  $row: span math.div(6, 2) / 7; // A two-element slash-separated list.
+  grid-row: $row;
+}
+
+// WRONG, will not work in future Sass versions.
+@debug (12px/4px); // 3
+
+// RIGHT, will work in future Sass versions.
+@debug math.div(12px, 4px); // 3
+
+
+.item3 {
+  $row: list.slash(span math.div(6, 2), 7);
+  grid-row: $row;
+}
+
+
+// WRONG, will not work in future Sass versions.
+@debug (12px/4px); // 3
+
+// RIGHT, will work in future Sass versions.
+@debug calc(12px / 4px); // 3
+
+
+// ===========
+
+
+// ===========

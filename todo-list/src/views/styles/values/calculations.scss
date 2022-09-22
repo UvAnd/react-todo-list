@@ -1,0 +1,32 @@
+@debug calc(400px + 10%); // calc(400px + 10%)
+@debug calc(400px / 2); // 200px
+@debug min(100px, calc(1rem + 10%)); // min(100px, 1rem + 10%)
+
+// Вместо того, чтобы писать calc(10px + #{$var}), просто пишите  calc(10px + $var)!
+
+
+// ==============
+$width: calc(400px + 10%);
+
+.sidebar {
+  width: $width;
+  padding-left: calc($width / 4);
+}
+
+
+.sidebar {
+  width: calc(400px + 10%);
+  padding-left: calc($width / 4);
+}
+
+// ==============
+$width: calc(100% + 10px);
+@debug $width * 2; // Error!
+@debug calc($width * 2); // calc((100% + 10px) * 2);
+
+
+// ==============
+
+
+
+// ==============

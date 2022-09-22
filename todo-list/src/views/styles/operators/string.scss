@@ -1,0 +1,9 @@
+@debug "Helvetica" + " Neue"; // "Helvetica Neue"
+@debug sans- + serif; // sans-serif
+@debug sans - serif; // sans-serif
+
+@debug "Elapsed time: " + 10s; // "Elapsed time: 10s";
+@debug true + " is a boolean value"; // "true is a boolean value";
+
+@debug / 15px; // /15px
+@debug - moz; // -moz

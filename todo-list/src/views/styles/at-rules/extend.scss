@@ -1,0 +1,65 @@
+
+.error {
+  border: 1px #f00;
+  background-color: #fdd;
+
+  &--serious {
+    @extend .error;
+    border-width: 3px;
+  }
+}
+
+// -------------------
+.content nav.sidebar {
+  @extend .info;
+}
+
+// This won't be extended, because `p` is incompatible with `nav`.
+p.info {
+  background-color: #dee9fc;
+}
+
+// There's no way to know whether `<div class="guide">` will be inside or
+// outside `<div class="content">`, so Sass generates both to be safe.
+.guide .info {
+  border: 1px solid rgba(#000, 0.8);
+  border-radius: 2px;
+}
+
+// Sass knows that every element matching "main.content" also matches ".content"
+// and avoids generating unnecessary interleaved selectors.
+main.content .info {
+  font-size: 0.8em;
+}
+
+// -------------------
+.alert:hover, %strong-alert {
+  font-weight: bold;
+}
+
+%strong-alert:hover {
+  color: red;
+}
+// -------------------
+.alert {
+  @extend .message.info;
+  //      ^^^^^^^^^^^^^
+  // Error: Write @extend .message, .info instead.
+
+  @extend .main .info;
+  //      ^^^^^^^^^^^
+  // Error: write @extend .info instead.
+}
+// -------------------
+@media screen and (max-width: 600px) {
+  .error--serious {
+    @extend .error;
+    //      ^^^^^^
+    // Error: ".error" was extended in @media, but used outside it.
+  }
+}
+
+.error {
+  border: 1px #f00;
+  background-color: #fdd;
+}

@@ -1,6 +1,6 @@
 /* theme/_dark.scss */
 $base-color: black !default; /* доступна для конфигурации */
-$_private: true !default; /* не доступна для конфигурации в силу приватности */
+$_private: true !default; /* не доступна для конфигурации в силу приватности или с -   */
 $config: false; /* не доступна для конфигурации, так как не помечена как !default */
 
 .color {

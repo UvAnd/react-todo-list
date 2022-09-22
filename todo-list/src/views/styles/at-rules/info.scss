@@ -1,0 +1,53 @@
+// @error
+@mixin reflexive-position($property, $value) {
+  @if $property != left and $property != right {
+    @error "Property #{$property} must be either left or right.";
+  }
+
+  $left-value: if($property == right, initial, $value);
+  $right-value: if($property == right, $value, initial);
+
+  left: $left-value;
+  right: $right-value;
+  [dir=rtl] & {
+    left: $right-value;
+    right: $left-value;
+  }
+}
+
+.sidebar {
+  @include reflexive-position(top, 12px);
+  //       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  // Error: Property top must be either left or right.
+}
+
+// -------------------
+// @warn
+$known-prefixes: webkit, moz, ms, o;
+
+@mixin prefix($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if not index($known-prefixes, $prefix) {
+      @warn "Unknown prefix #{$prefix}.";
+    }
+
+    -#{$prefix}-#{$property}: $value;
+  }
+  #{$property}: $value;
+}
+
+.tilt {
+  // Oops, we typo'd "webkit" as "wekbit"!
+  @include prefix(transform, rotate(15deg), wekbit ms);
+}
+
+// -------------------
+// @debug
+@mixin inset-divider-offset($offset, $padding) {
+  $divider-offset: (2 * $padding) + $offset;
+  @debug "divider offset: #{$divider-offset}";
+
+  margin-left: $divider-offset;
+  width: calc(100% - #{$divider-offset});
+}
+// test.scss:3 Debug: divider offset: 132px

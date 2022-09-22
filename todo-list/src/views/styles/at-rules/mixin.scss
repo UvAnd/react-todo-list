@@ -1,0 +1,116 @@
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin horizontal-list {
+  @include reset-list;
+
+  li {
+    display: inline-block;
+    margin: {
+      left: -2px;
+      right: 2em;
+    }
+  }
+}
+
+nav ul {
+  @include horizontal-list;
+}
+
+// ------------
+// Необязательные аргументы
+@mixin replace-text($image, $x: 50%, $y: 50%) {
+  text-indent: -99999em;
+  overflow: hidden;
+  text-align: left;
+
+  background: {
+    image: $image;
+    repeat: no-repeat;
+    position: $x $y;
+  }
+}
+
+.mail-icon {
+  @include replace-text(url("/images/mail.svg"), 0);
+}
+
+
+// ------------
+// Принятие произвольных аргументов (список аргументов)
+@mixin order($height, $selectors...) {
+  @for $i from 0 to length($selectors) {
+    #{nth($selectors, $i + 1)} {
+      position: absolute;
+      height: $height;
+      margin-top: $i * $height;
+    }
+  }
+}
+
+@include order(150px, "input.name", "input.address", "input.zip");
+
+// 2
+@use "sass:meta";
+
+@mixin syntax-colors($args...) {
+  @debug meta.keywords($args);
+  // (string: #080, comment: #800, variable: #60b)
+
+  @each $name, $color in meta.keywords($args) {
+    pre span.stx-#{$name} {
+      color: $color;
+    }
+  }
+}
+
+@include syntax-colors(
+  $string: #080,
+  $comment: #800,
+  $variable: #60b,
+)
+
+// 3
+$form-selectors: "input.name", "input.address", "input.zip" !default;
+
+@include order(150px, $form-selectors...);
+
+// --------------
+// Передача аргументов в блоки контента постоянная ссылкаПередача аргументов блокам содержимого
+@mixin media($types...) {
+  @each $type in $types {
+    @media #{$type} {
+      @content($type);
+    }
+  }
+}
+
+@include media(screen, print) using ($type) {
+  h1 {
+    font-size: 40px;
+    @if $type == print {
+      font-family: Calluna;
+    }
+  }
+}
+
+// Дичь
+// =reset-list
+//   margin: 0
+//   padding: 0
+//   list-style: none
+
+// =horizontal-list
+//   +reset-list
+
+//   li
+//     display: inline-block
+//     margin:
+//       left: -2px
+//       right: 2em
+
+// nav ul
+//   +horizontal-list

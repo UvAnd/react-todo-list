@@ -1,0 +1,31 @@
+@debug 5px * 2px; // 10px*px (read "square pixels")
+
+// ===========
+
+@debug 4px * 6px; // 24px*px (read "square pixels")
+@debug math.div(5px, 2s); // 2.5px/s (read "pixels per second")
+
+// 3.125px*deg/s*em (read "pixel-degrees per second-em")
+@debug 5px * math.div(math.div(30deg, 2s), 24em); 
+
+$degrees-per-second: math.div(20deg, 1s);
+@debug $degrees-per-second; // 20deg/s
+@debug math.div(1, $degrees-per-second); // 0.05s/deg
+
+// ===========
+// CSS defines one inch as 96 pixels.
+@debug 1in + 6px; // 102px or 1.0625in
+
+@debug 1in + 1s;
+//     ^^^^^^^^
+// Error: Incompatible units s and in.
+
+// ===========
+// избегать использования интерполяции, такой как #{$number}px
+// Попробуйте сделать свою математическую единицу чистой, чтобы $numberуже была единица px, или напишите  $number * 1px.
+
+// ===========
+@debug 0.012345678912345; // 0.0123456789
+@debug 0.01234567891 == 0.01234567899; // true
+@debug 1.00000000009; // 1
+@debug 0.99999999991; // 1

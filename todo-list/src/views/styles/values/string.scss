@@ -1,0 +1,17 @@
+@debug string.unquote(".widget:hover"); // .widget:hover
+@debug string.quote(bold); // "bold"
+
+// Не все идентификаторы анализируются как строки без кавычек:
+
+// - Имена цветов CSS анализируются как цвета .
+// - null анализируется как значение Sass null .
+// - trueи falseанализируются как логические значения .
+// - not, andи orанализируются как логические операторы .
+// Из-за этого рекомендуется писать строки в кавычках, если только вы специально не пишете значение свойства CSS ,
+// которое использует строки без кавычек.
+
+// индекс с 1 в строках
+@debug string.index("Helvetica Neue", "Helvetica"); // 1
+@debug string.index("Helvetica Neue", "Neue"); // 11
+@debug string.slice("Roboto Mono", -4); // "Mono"
+

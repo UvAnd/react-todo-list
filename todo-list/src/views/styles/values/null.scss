@@ -1,0 +1,16 @@
+@debug string.index("Helvetica Neue", "Roboto"); // null
+@debug map.get(("large": 20px), "small"); // null
+@debug &; // null
+
+// ==============
+$fonts: ("serif": "Helvetica Neue", "monospace": "Consolas");
+
+h3 {
+  font: {
+    size: 18px;
+    weight: bold;
+    family: map-get($fonts, "sans");
+  }
+}
+
+// ==============

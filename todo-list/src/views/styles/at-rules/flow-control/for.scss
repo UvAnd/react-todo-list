@@ -1,0 +1,22 @@
+
+$base-color: #036;
+
+// or @for $i from 1 to 3 { - последний номер исключается
+@for $i from 1 through 3 {
+  ul:nth-child(3n + #{$i}) {
+    background-color: lighten($base-color, $i * 5%);
+  }
+}
+
+
+// ul:nth-child(3n + 1) {
+//   background-color: #004080;
+// }
+
+// ul:nth-child(3n + 2) {
+//   background-color: #004d99;
+// }
+
+// ul:nth-child(3n + 3) {
+//   background-color: #0059b3;
+// }
